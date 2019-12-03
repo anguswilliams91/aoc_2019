@@ -1,5 +1,4 @@
-import System.IO 
-import Control.Monad
+import System.IO
 
 fuelNeeded :: Int -> Int
 fuelNeeded x = div x 3 - 2
