@@ -1,7 +1,7 @@
 import System.IO
 import Data.Char
 import Data.List.Split
-import Data.Sequence hiding (splitAt, filter)
+import Data.Sequence hiding (splitAt)
 import Prelude hiding (length)
 
 applyOp :: (Int -> Int -> Int) -> Seq Int -> Int -> Seq Int
