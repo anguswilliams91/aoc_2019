@@ -4,11 +4,13 @@ import Data.List.Split
 import Data.Sequence hiding (splitAt, filter)
 import Prelude hiding (length)
 
+applyOp :: (Int -> Int -> Int) -> Seq Int -> Int -> Seq Int
 applyOp op xs i = update r (op (index xs p) (index xs q)) xs 
     where p = index xs i
           q = index xs (i + 1)
           r = index xs (i + 2)
-                       
+
+runIntCode :: Seq Int -> Int -> Seq Int
 runIntCode xs i
     | index xs i == 99 = xs
     | index xs i == 1 = runIntCode ys (i + 4)
@@ -16,10 +18,13 @@ runIntCode xs i
     where ys = applyOp (+) xs (i + 1)
           zs = applyOp (*) xs (i + 1)
 
+restoreProgram :: Seq Int -> Int -> Int -> Seq Int
 restoreProgram xs a b = update 2 a (update 1 b xs)
 
+runProgram :: Seq Int -> Int -> Int-> Int
 runProgram xs a b = index (runIntCode (restoreProgram xs a b) 0) 0
 
+solveInputs :: Seq Int -> Int -> Int
 solveInputs xs y = 100 * (snd c) + (fst c)
     where c = head [(a, b) | a <- zs, b <- zs, (runProgram xs a b) == y]
           zs = [1..length xs - 1]
